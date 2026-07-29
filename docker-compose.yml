@@ -1,0 +1,24 @@
+# Optional: run Postgres locally instead of the default H2 file database.
+#
+# Usage:
+#   docker compose up -d
+#   cd backend && mvn spring-boot:run -Dspring-boot.run.profiles=postgres
+#
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: job-tracker-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: jobtracker
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - job-tracker-pgdata:/var/lib/postgresql/data
+
+volumes:
+  job-tracker-pgdata:
